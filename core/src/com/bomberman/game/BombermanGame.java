@@ -5,11 +5,13 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntityListener;
 import com.badlogic.gdx.*;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.bomberman.game.entity.PlayerEntity;
 import com.bomberman.game.systems.MovementSystem;
@@ -24,8 +26,10 @@ public class BombermanGame extends ApplicationAdapter implements InputProcessor{
 	private PlayerEntity player;
 	private OrthographicCamera camera;
 	private FitViewport fitViewport;
+	private ShapeRenderer shape;
 
 	private void initializeTextures(){
+		shape = new ShapeRenderer();
 		batch = new SpriteBatch();
 		playerOneTexture = new Texture("player.one.png");
 		playerOneRegions = new TextureRegion[2];
@@ -63,6 +67,7 @@ public class BombermanGame extends ApplicationAdapter implements InputProcessor{
 		fitViewport.apply();
 
 		camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
+
 //		camera.setToOrtho(false, 17 * 16, 17 * 16);
 //		camera.update();
 	}
@@ -86,7 +91,15 @@ public class BombermanGame extends ApplicationAdapter implements InputProcessor{
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		world.update(Gdx.graphics.getDeltaTime());
+
 		camera.update();
+
+		shape.setProjectionMatrix(camera.combined);
+		shape.begin(ShapeRenderer.ShapeType.Filled);
+		shape.setColor(Color.WHITE);
+		shape.rect(0, 0, 16 * 17, 16 * 17);
+		shape.end();
+
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		render.update(Gdx.graphics.getDeltaTime());
