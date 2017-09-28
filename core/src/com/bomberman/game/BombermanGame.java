@@ -101,12 +101,6 @@ public class BombermanGame extends ApplicationAdapter implements InputProcessor{
 		camera.update();
 		mapLoader.render(camera);
 
-//		shape.setProjectionMatrix(camera.combined);
-//		shape.begin(ShapeRenderer.ShapeType.Filled);
-//		shape.setColor(Color.WHITE);
-//		shape.rect(0, 0, 16 * 17, 16 * 17);
-//		shape.end();
-
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		render.update(Gdx.graphics.getDeltaTime());
