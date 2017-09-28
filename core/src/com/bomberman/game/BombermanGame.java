@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -27,6 +28,7 @@ public class BombermanGame extends ApplicationAdapter implements InputProcessor{
 	private OrthographicCamera camera;
 	private FitViewport fitViewport;
 	private ShapeRenderer shape;
+	private Animation playerAnimation;
 
 	private void initializeTextures(){
 		shape = new ShapeRenderer();
@@ -36,6 +38,8 @@ public class BombermanGame extends ApplicationAdapter implements InputProcessor{
 		for (int i = 0; i < 2; i++){
 			playerOneRegions[i] = new TextureRegion(playerOneTexture, i * 16, 0, 16, 16);
 		}
+
+		playerAnimation = new Animation<TextureRegion>(0.4f, playerOneRegions);
 	}
 
 	private void initializeWorld(){

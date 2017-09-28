@@ -22,7 +22,8 @@ public class RenderSystem extends IteratingSystem {
     protected void processEntity(Entity entity, float deltaTime) {
         PositionComponent position = Mappers.positionMapper.get(entity);
         RenderComponent render = Mappers.renderMapper.get(entity);
+        render.timer += deltaTime;
+        batch.draw(render.animation.getKeyFrame(render.timer, true), position.x, position.y);
 
-        batch.draw(render.texture, position.x, position.y);
     }
 }
