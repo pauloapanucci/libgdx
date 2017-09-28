@@ -28,7 +28,7 @@ public class BombermanGame extends ApplicationAdapter implements InputProcessor{
 	private OrthographicCamera camera;
 	private FitViewport fitViewport;
 	private ShapeRenderer shape;
-	private Animation playerAnimation;
+	private Animation playerOneAnimation;
 
 	private void initializeTextures(){
 		shape = new ShapeRenderer();
@@ -39,7 +39,7 @@ public class BombermanGame extends ApplicationAdapter implements InputProcessor{
 			playerOneRegions[i] = new TextureRegion(playerOneTexture, i * 16, 0, 16, 16);
 		}
 
-		playerAnimation = new Animation<TextureRegion>(0.4f, playerOneRegions);
+		playerOneAnimation = new Animation<TextureRegion>(0.4f, playerOneRegions);
 	}
 
 	private void initializeWorld(){
@@ -60,7 +60,7 @@ public class BombermanGame extends ApplicationAdapter implements InputProcessor{
 		render = new Engine();
 		render.addSystem(new RenderSystem(batch));
 
-		player = new PlayerEntity(0, 0, playerOneRegions[0]);
+		player = new PlayerEntity(0, 0, playerOneAnimation);
 		world.addEntity(player);
 
 		Gdx.input.setInputProcessor(new InputMultiplexer(this, player));

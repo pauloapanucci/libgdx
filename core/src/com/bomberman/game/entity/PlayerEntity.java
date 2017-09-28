@@ -3,6 +3,7 @@ package com.bomberman.game.entity;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.bomberman.game.components.InputComponent;
 import com.bomberman.game.components.PositionComponent;
@@ -12,7 +13,7 @@ public class PlayerEntity extends Entity implements InputProcessor{
 
     private InputComponent input;
 
-    public PlayerEntity(int x, int y, TextureRegion texture) {
+    public PlayerEntity(int x, int y, Animation<TextureRegion> animation) {
         PositionComponent position = new PositionComponent();
         position.x = x;
         position.y = y;
@@ -20,7 +21,7 @@ public class PlayerEntity extends Entity implements InputProcessor{
         input = new InputComponent();
         this.add(input);
         RenderComponent render = new RenderComponent();
-        render.texture = texture;
+        render.animation = animation;
         this.add(render);
     }
 
