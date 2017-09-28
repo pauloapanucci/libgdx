@@ -72,8 +72,6 @@ public class BombermanGame extends ApplicationAdapter implements InputProcessor{
 
 		camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
 
-//		camera.setToOrtho(false, 17 * 16, 17 * 16);
-//		camera.update();
 	}
 
 
