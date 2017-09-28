@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.bomberman.game.entity.PlayerEntity;
 import com.bomberman.game.systems.MovementSystem;
 import com.bomberman.game.systems.RenderSystem;
@@ -22,6 +23,7 @@ public class BombermanGame extends ApplicationAdapter implements InputProcessor{
 	private Engine world, render;
 	private PlayerEntity player;
 	private OrthographicCamera camera;
+	private FitViewport fitViewport;
 
 	private void initializeTextures(){
 		batch = new SpriteBatch();
@@ -56,6 +58,7 @@ public class BombermanGame extends ApplicationAdapter implements InputProcessor{
 		Gdx.input.setInputProcessor(new InputMultiplexer(this, player));
 
 		camera = new OrthographicCamera(17 * 16,17 * 16);
+		fitViewport = new FitViewport(17 * 16, 17 * 16, camera);
 		camera.setToOrtho(false, 17 * 16, 17 * 16);
 		camera.update();
 	}
@@ -66,6 +69,11 @@ public class BombermanGame extends ApplicationAdapter implements InputProcessor{
 	public void create () {
 		initializeTextures();
 		initializeWorld();
+	}
+
+	@Override
+	public  void resize (int width, int height){
+		fitViewport.update(width, height);
 	}
 
 	@Override
