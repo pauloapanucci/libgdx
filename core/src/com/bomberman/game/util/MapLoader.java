@@ -16,6 +16,7 @@ import com.bomberman.game.components.HitBoxComponent;
 import com.bomberman.game.components.PositionComponent;
 import com.bomberman.game.components.StaticColliderComponent;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -29,9 +30,10 @@ public class MapLoader {
 
     public OrthogonalTiledMapRenderer renderer;
 
-    private void loadMap (String filename) {
+    public void loadMap (String filename) {
         tiledMap = new TmxMapLoader().load("map.tmx");
         renderer = new OrthogonalTiledMapRenderer(tiledMap);
+        collisionList = new ArrayList<Rectangle>();
         floorLayer = (TiledMapTileLayer) tiledMap.getLayers().get("Floor");
         layoutLayer = (TiledMapTileLayer) tiledMap.getLayers().get("Layout");
         collisionLayer = tiledMap.getLayers().get("Collision");
@@ -43,12 +45,12 @@ public class MapLoader {
             int w = properties.get("width", Float.class).intValue();
             int h = properties.get("height", Float.class).intValue();
             obtain.set(x, y, w, h);
-            collisionList.add(Pools.rectPool.obtain());
+            collisionList.add(obtain);
         }
 
     }
 
-    private void createEntities (Engine world) {
+    public void createEntities (Engine world) {
         for (Rectangle rect : collisionList) {
             Entity entity = new Entity();
 
@@ -71,14 +73,14 @@ public class MapLoader {
 
     public void render (OrthographicCamera camera) {
         renderer.setView(camera);
+        renderer.getBatch().begin();
         renderer.renderTileLayer(floorLayer);
         renderer.renderTileLayer(layoutLayer);
+        renderer.getBatch().end();
     }
 
-    private void dispose () {
-        for (Rectangle rectangle : collisionList) {
-            Pools.rectPool.free(rectangle);
-        }
+    public void dispose () {
+        for (Rectangle rectangle : collisionList) Pools.rectPool.free(rectangle);
         renderer.dispose();
         tiledMap.dispose();
     }

@@ -17,6 +17,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.bomberman.game.entity.PlayerEntity;
 import com.bomberman.game.systems.MovementSystem;
 import com.bomberman.game.systems.RenderSystem;
+import com.bomberman.game.util.MapLoader;
 
 public class BombermanGame extends ApplicationAdapter implements InputProcessor{
 	SpriteBatch batch;
@@ -29,6 +30,7 @@ public class BombermanGame extends ApplicationAdapter implements InputProcessor{
 	private FitViewport fitViewport;
 	private ShapeRenderer shape;
 	private Animation playerOneAnimation;
+	private MapLoader mapLoader;
 
 	private void initializeTextures(){
 		shape = new ShapeRenderer();
@@ -78,6 +80,8 @@ public class BombermanGame extends ApplicationAdapter implements InputProcessor{
 	
 	@Override
 	public void create () {
+		mapLoader = new MapLoader();
+		mapLoader.loadMap("map.tmx");
 		initializeTextures();
 		initializeWorld();
 	}
@@ -95,12 +99,13 @@ public class BombermanGame extends ApplicationAdapter implements InputProcessor{
 		world.update(Gdx.graphics.getDeltaTime());
 
 		camera.update();
+		mapLoader.render(camera);
 
-		shape.setProjectionMatrix(camera.combined);
-		shape.begin(ShapeRenderer.ShapeType.Filled);
-		shape.setColor(Color.WHITE);
-		shape.rect(0, 0, 16 * 17, 16 * 17);
-		shape.end();
+//		shape.setProjectionMatrix(camera.combined);
+//		shape.begin(ShapeRenderer.ShapeType.Filled);
+//		shape.setColor(Color.WHITE);
+//		shape.rect(0, 0, 16 * 17, 16 * 17);
+//		shape.end();
 
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
@@ -111,6 +116,7 @@ public class BombermanGame extends ApplicationAdapter implements InputProcessor{
 	@Override
 	public void dispose () {
 		batch.dispose();
+		mapLoader.dispose();
 		playerOneTexture.dispose();
 	}
 
