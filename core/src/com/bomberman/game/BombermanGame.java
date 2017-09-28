@@ -57,10 +57,14 @@ public class BombermanGame extends ApplicationAdapter implements InputProcessor{
 
 		Gdx.input.setInputProcessor(new InputMultiplexer(this, player));
 
-		camera = new OrthographicCamera(17 * 16,17 * 16);
+		camera = new OrthographicCamera();
 		fitViewport = new FitViewport(17 * 16, 17 * 16, camera);
-		camera.setToOrtho(false, 17 * 16, 17 * 16);
-		camera.update();
+		fitViewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		fitViewport.apply();
+
+		camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
+//		camera.setToOrtho(false, 17 * 16, 17 * 16);
+//		camera.update();
 	}
 
 
@@ -74,13 +78,15 @@ public class BombermanGame extends ApplicationAdapter implements InputProcessor{
 	@Override
 	public  void resize (int width, int height){
 		fitViewport.update(width, height);
+		camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
 	}
 
 	@Override
 	public void render () {
-		Gdx.gl.glClearColor(1, 1, 1, 1);
+		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		world.update(Gdx.graphics.getDeltaTime());
+		camera.update();
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		render.update(Gdx.graphics.getDeltaTime());
