@@ -2,6 +2,7 @@ package com.bomberman.game.util;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapProperties;
@@ -68,10 +69,17 @@ public class MapLoader {
         }
     }
 
+    public void render (OrthographicCamera camera) {
+        renderer.setView(camera);
+        renderer.renderTileLayer(floorLayer);
+        renderer.renderTileLayer(layoutLayer);
+    }
+
     private void dispose () {
         for (Rectangle rectangle : collisionList) {
             Pools.rectPool.free(rectangle);
         }
+        renderer.dispose();
         tiledMap.dispose();
     }
 
