@@ -50,7 +50,7 @@ public class MapLoader {
     private void createEntities (Engine world) {
         for (Rectangle rect : collisionList) {
             Entity entity = new Entity();
-            
+
             PositionComponent position = new PositionComponent();
             position.x = ((int) rect.x);
             position.y = ((int) rect.y);
