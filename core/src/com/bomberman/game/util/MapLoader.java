@@ -1,6 +1,7 @@
 package com.bomberman.game.util;
 
 import com.badlogic.ashley.core.Engine;
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapProperties;
@@ -10,6 +11,9 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.bomberman.game.components.HitBoxComponent;
+import com.bomberman.game.components.PositionComponent;
+import com.bomberman.game.components.StaticColliderComponent;
 
 import java.util.List;
 
@@ -43,8 +47,25 @@ public class MapLoader {
 
     }
 
-    private void createObstacles (Engine world) {
+    private void createEntities (Engine world) {
+        for (Rectangle rect : collisionList) {
+            Entity entity = new Entity();
+            
+            PositionComponent position = new PositionComponent();
+            position.x = ((int) rect.x);
+            position.y = ((int) rect.y);
+            entity.add(position);
 
+            HitBoxComponent hitBox = new HitBoxComponent();
+            hitBox.x = 0;
+            hitBox.y = 0;
+            hitBox.width = ((int) rect.width);
+            hitBox.height = ((int) rect.height);
+
+            entity.add(hitBox);
+            entity.add(new StaticColliderComponent());
+            world.addEntity(entity);
+        }
     }
 
     private void dispose () {
