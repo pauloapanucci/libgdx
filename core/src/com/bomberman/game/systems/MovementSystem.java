@@ -43,18 +43,21 @@ public class MovementSystem extends IteratingSystem {
     }
 
     private boolean collides(Rectangle player) {
+        Rectangle collisionRectangle = Pools.rectPool.obtain();
         for (Entity collisionEntity : collisionEntities) {
             PositionComponent colliderPosition = Mappers.positionMapper.get(collisionEntity);
             HitBoxComponent colliderHitbox = Mappers.hitBoxMapper.get(collisionEntity);
-            Rectangle collisionRectangle = Pools.rectPool.obtain();
             collisionRectangle.set(
                     colliderPosition.x + colliderHitbox.x,
                     colliderPosition.y + colliderHitbox.y,
                     colliderHitbox.width,
                     colliderHitbox.height);
-            if (collisionRectangle.overlaps(player))
+            if (collisionRectangle.overlaps(player)) {
+                Pools.rectPool.free(collisionRectangle);
                 return true;
+            }
         }
+        Pools.rectPool.free(collisionRectangle);
         return false;
     }
 
@@ -86,7 +89,6 @@ public class MovementSystem extends IteratingSystem {
             } else if (input.down) {
                 int py = position.y - 16;
                 playerHitbox.setY(py);
-                input.timer = DELAY;
                 if (!collides(playerHitbox)) {
                     position.y = py;
                     input.timer = DELAY;
@@ -95,22 +97,22 @@ public class MovementSystem extends IteratingSystem {
             } else if (input.left) {
                 int px = position.x - 16;
                 playerHitbox.setX(px);
-                input.timer = DELAY;
                 if (!collides(playerHitbox)) {
-                    position.y = px;
+                    position.x = px;
                     input.timer = DELAY;
                 }
 
             } else if (input.right) {
                 int px = position.x + 16;
-                input.timer = DELAY;
                 playerHitbox.setX(px);
                 if (!collides(playerHitbox)) {
-                    position.y = px;
+                    position.x = px;
                     input.timer = DELAY;
                 }
             }
 
         }
+
+        Pools.rectPool.free(playerHitbox);
     }
 }
