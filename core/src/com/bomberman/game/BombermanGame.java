@@ -21,11 +21,17 @@ public class BombermanGame extends ApplicationAdapter {
 	TextureRegion[] playerOneRegions;
 	private Engine world, render;
 	private PlayerEntity player;
-	
-	@Override
-	public void create () {
-		batch = new SpriteBatch();
 
+	private void initializeTextures(){
+		batch = new SpriteBatch();
+		playerOneTexture = new Texture("player.one.png");
+		playerOneRegions = new TextureRegion[2];
+		for (int i = 0; i < 2; i++){
+			playerOneRegions[i] = new TextureRegion(playerOneTexture, i * 16, 0, 16, 16);
+		}
+	}
+
+	private void initializeWorld(){
 		world = new Engine();
 		world.addSystem(new MovementSystem());
 		world.addEntityListener(new EntityListener() {
@@ -43,16 +49,19 @@ public class BombermanGame extends ApplicationAdapter {
 		render = new Engine();
 		render.addSystem(new RenderSystem(batch));
 
-		playerOneTexture = new Texture("player.one.png");
-		playerOneRegions = new TextureRegion[2];
-		for (int i = 0; i < 2; i++){
-			playerOneRegions[i] = new TextureRegion(playerOneTexture, i * 16, 0, 16, 16);
-		}
-
 		player = new PlayerEntity(0, 0, playerOneRegions[0]);
 		world.addEntity(player);
 
 		Gdx.input.setInputProcessor(player);
+
+	}
+
+
+	
+	@Override
+	public void create () {
+		initializeTextures();
+		initializeWorld();
 	}
 
 	@Override
