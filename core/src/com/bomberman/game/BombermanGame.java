@@ -6,6 +6,8 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntityListener;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -14,7 +16,7 @@ import com.bomberman.game.entity.PlayerEntity;
 import com.bomberman.game.systems.MovementSystem;
 import com.bomberman.game.systems.RenderSystem;
 
-public class BombermanGame extends ApplicationAdapter {
+public class BombermanGame extends ApplicationAdapter implements InputProcessor{
 	SpriteBatch batch;
 	TextureRegion img;
 	private Texture playerOneTexture;
@@ -78,5 +80,57 @@ public class BombermanGame extends ApplicationAdapter {
 	public void dispose () {
 		batch.dispose();
 		playerOneTexture.dispose();
+	}
+
+	@Override
+	public boolean keyDown(int keycode) {
+		switch (keycode) {
+			case Input.Keys.ESCAPE:
+				Gdx.app.exit();
+				break;
+
+			case Input.Keys.R:
+				initializeWorld();
+				break;
+
+			default:
+				return false;
+		}
+		return true;
+	}
+
+	@Override
+	public boolean keyUp(int keycode) {
+		return false;
+	}
+
+	@Override
+	public boolean keyTyped(char character) {
+		return false;
+	}
+
+	@Override
+	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		return false;
+	}
+
+	@Override
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		return false;
+	}
+
+	@Override
+	public boolean touchDragged(int screenX, int screenY, int pointer) {
+		return false;
+	}
+
+	@Override
+	public boolean mouseMoved(int screenX, int screenY) {
+		return false;
+	}
+
+	@Override
+	public boolean scrolled(int amount) {
+		return false;
 	}
 }
