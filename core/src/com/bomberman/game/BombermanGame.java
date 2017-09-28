@@ -6,6 +6,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntityListener;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -20,6 +21,7 @@ public class BombermanGame extends ApplicationAdapter implements InputProcessor{
 	TextureRegion[] playerOneRegions;
 	private Engine world, render;
 	private PlayerEntity player;
+	private OrthographicCamera camera;
 
 	private void initializeTextures(){
 		batch = new SpriteBatch();
@@ -52,6 +54,10 @@ public class BombermanGame extends ApplicationAdapter implements InputProcessor{
 		world.addEntity(player);
 
 		Gdx.input.setInputProcessor(new InputMultiplexer(this, player));
+
+		camera = new OrthographicCamera(17 * 16,17 * 16);
+		camera.setToOrtho(false, 17 * 16, 17 * 16);
+		camera.update();
 	}
 
 
@@ -67,6 +73,7 @@ public class BombermanGame extends ApplicationAdapter implements InputProcessor{
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		world.update(Gdx.graphics.getDeltaTime());
+		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		render.update(Gdx.graphics.getDeltaTime());
 		batch.end();
