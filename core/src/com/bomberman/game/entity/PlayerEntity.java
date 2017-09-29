@@ -15,21 +15,26 @@ public class PlayerEntity extends Entity implements InputProcessor{
     private InputComponent input;
 
     public PlayerEntity(int x, int y, Animation<TextureRegion> animation) {
+
+        PositionComponent position = new PositionComponent();
+        position.x = x;
+        position.y = y;
+        this.add(position);
+
+        RenderComponent render = new RenderComponent();
+        render.animation = animation;
+        this.add(render);
+
         HitBoxComponent hitBox = new HitBoxComponent();
         this.add(hitBox);
         hitBox.x = 0;
         hitBox.y = 0;
         hitBox.width = 16;
         hitBox.height = 16;
-        PositionComponent position = new PositionComponent();
-        position.x = x;
-        position.y = y;
-        this.add(position);
+
         input = new InputComponent();
         this.add(input);
-        RenderComponent render = new RenderComponent();
-        render.animation = animation;
-        this.add(render);
+
     }
 
     @Override
