@@ -13,10 +13,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.bomberman.game.components.DestructibleComponent;
-import com.bomberman.game.components.HitBoxComponent;
-import com.bomberman.game.components.PositionComponent;
-import com.bomberman.game.components.StaticColliderComponent;
+import com.bomberman.game.components.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,8 +57,8 @@ public class MapLoader {
             int width = properties.get("width", Float.class).intValue();
             int height = properties.get("height", Float.class).intValue();
             String type = properties.get("type", String.class);
-            for (int i = 0; i < width; i++){
-                for (int j = 0; j < height; j++){
+            for (int i = 0; i < width; i+=16){
+                for (int j = 0; j < height; j+=16){
                     final int px =  i + x, py = j + y;
                     if(collisionList.stream().noneMatch((collider) -> collider.x == px && collider.y == py)){
                         if ("required".equals(type)) {
@@ -127,6 +124,10 @@ public class MapLoader {
         hitBox.width = 16;
         hitBox.height = 16;
         entity.add(hitBox);
+
+        RenderComponent render = new RenderComponent();
+        render.animation = Textures.obstacleAnimation;
+        entity.add(render);
 
         entity.add(new StaticColliderComponent());
         entity.add(new DestructibleComponent());

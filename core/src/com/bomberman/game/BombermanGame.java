@@ -5,7 +5,6 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntityListener;
 import com.badlogic.gdx.*;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -18,30 +17,40 @@ import com.bomberman.game.entity.PlayerEntity;
 import com.bomberman.game.systems.MovementSystem;
 import com.bomberman.game.systems.RenderSystem;
 import com.bomberman.game.util.MapLoader;
+import com.bomberman.game.util.Textures;
+
+import static com.bomberman.game.util.Textures.obstacleTexture;
+import static com.bomberman.game.util.Textures.playerOneRegions;
+import static com.bomberman.game.util.Textures.playerOneTexture;
 
 public class BombermanGame extends ApplicationAdapter implements InputProcessor{
 	SpriteBatch batch;
-	TextureRegion img;
-	private Texture playerOneTexture;
-	TextureRegion[] playerOneRegions;
+
+
 	private Engine world, render;
 	private PlayerEntity player;
 	private OrthographicCamera camera;
 	private FitViewport fitViewport;
 	private ShapeRenderer shape;
-	private Animation playerOneAnimation;
+
 	private MapLoader mapLoader;
+
 
 	private void initializeTextures(){
 		shape = new ShapeRenderer();
 		batch = new SpriteBatch();
-		playerOneTexture = new Texture("player.one.png");
-		playerOneRegions = new TextureRegion[2];
+		Textures.playerOneTexture = new Texture("player.one.png");
+		Textures.playerOneRegions = new TextureRegion[2];
 		for (int i = 0; i < 2; i++){
-			playerOneRegions[i] = new TextureRegion(playerOneTexture, i * 16, 0, 16, 16);
+			Textures.playerOneRegions[i] = new TextureRegion(Textures.playerOneTexture, i * 16, 0, 16, 16);
 		}
 
-		playerOneAnimation = new Animation<TextureRegion>(0.4f, playerOneRegions);
+		Textures.playerOneAnimation = new Animation<TextureRegion>(0.4f, Textures.playerOneRegions);
+
+
+		Textures.obstacleTexture = new Texture("obstacle.png");
+		Textures.obstacleRegion = new TextureRegion(Textures.obstacleTexture, 0,0,16, 16);
+		Textures.obstacleAnimation = new Animation<TextureRegion>(1f, Textures.obstacleRegion);
 	}
 
 	private void initializeWorld(){
@@ -62,7 +71,7 @@ public class BombermanGame extends ApplicationAdapter implements InputProcessor{
 		render = new Engine();
 		render.addSystem(new RenderSystem(batch));
 
-		player = new PlayerEntity(16,16, playerOneAnimation);
+		player = new PlayerEntity(16,16, Textures.playerOneAnimation);
 		world.addEntity(player);
 
 		Gdx.input.setInputProcessor(new InputMultiplexer(this, player));
@@ -113,7 +122,8 @@ public class BombermanGame extends ApplicationAdapter implements InputProcessor{
 	public void dispose () {
 		batch.dispose();
 		mapLoader.dispose();
-		playerOneTexture.dispose();
+		Textures.playerOneTexture.dispose();
+		Textures.obstacleTexture.dispose();
 	}
 
 	@Override
