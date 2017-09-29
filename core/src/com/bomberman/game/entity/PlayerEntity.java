@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.bomberman.game.components.HitBoxComponent;
 import com.bomberman.game.components.InputComponent;
 import com.bomberman.game.components.PositionComponent;
 import com.bomberman.game.components.RenderComponent;
@@ -14,6 +15,12 @@ public class PlayerEntity extends Entity implements InputProcessor{
     private InputComponent input;
 
     public PlayerEntity(int x, int y, Animation<TextureRegion> animation) {
+        HitBoxComponent hitBox = new HitBoxComponent();
+        this.add(hitBox);
+        hitBox.x = 0;
+        hitBox.y = 0;
+        hitBox.width = 16;
+        hitBox.height = 16;
         PositionComponent position = new PositionComponent();
         position.x = x;
         position.y = y;

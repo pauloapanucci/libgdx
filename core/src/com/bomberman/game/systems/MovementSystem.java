@@ -22,7 +22,7 @@ public class MovementSystem extends IteratingSystem {
 
     public MovementSystem() {
         super(Family
-                .all(PositionComponent.class, InputComponent.class)
+                .all(PositionComponent.class, InputComponent.class, HitBoxComponent.class)
                 .get());
         collisionFamily = Family
                 .all(PositionComponent.class,

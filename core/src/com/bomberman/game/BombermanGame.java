@@ -62,7 +62,7 @@ public class BombermanGame extends ApplicationAdapter implements InputProcessor{
 		render = new Engine();
 		render.addSystem(new RenderSystem(batch));
 
-		player = new PlayerEntity(0, 0, playerOneAnimation);
+		player = new PlayerEntity(16,16, playerOneAnimation);
 		world.addEntity(player);
 
 		Gdx.input.setInputProcessor(new InputMultiplexer(this, player));
@@ -73,6 +73,8 @@ public class BombermanGame extends ApplicationAdapter implements InputProcessor{
 		fitViewport.apply();
 
 		camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
+
+		this.mapLoader.createEntities(world);
 
 	}
 
