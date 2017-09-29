@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Textures {
     public static TextureRegion img;
+    
 
     public static Animation playerOneAnimation;
     public static  Texture playerOneTexture;
