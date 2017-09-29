@@ -10,8 +10,10 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.bomberman.game.components.DestructibleComponent;
 import com.bomberman.game.components.HitBoxComponent;
 import com.bomberman.game.components.PositionComponent;
 import com.bomberman.game.components.StaticColliderComponent;
@@ -96,8 +98,40 @@ public class MapLoader {
 
             entity.add(hitBox);
             entity.add(new StaticColliderComponent());
+
             world.addEntity(entity);
         }
+
+        for (Vector2 vec2 : requiredObstacleList) {
+            world.addEntity(createObstacle(vec2));
+        }
+
+        for (Vector2 vec2 : randomObstacleList) {
+            if(MathUtils.randomBoolean()) {
+                world.addEntity(createObstacle(vec2));
+            }
+        }
+    }
+
+    private Entity createObstacle (Vector2 vec2) {
+        Entity entity = new Entity();
+
+        PositionComponent position = new PositionComponent();
+        position.x = ((int) vec2.x);
+        position.y = ((int) vec2.y);
+        entity.add(position);
+
+        HitBoxComponent hitBox = new HitBoxComponent();
+        hitBox.x = 0;
+        hitBox.y = 0;
+        hitBox.width = 16;
+        hitBox.height = 16;
+        entity.add(hitBox);
+
+        entity.add(new StaticColliderComponent());
+        entity.add(new DestructibleComponent());
+
+        return entity;
     }
 
     public void render (OrthographicCamera camera) {
@@ -109,6 +143,8 @@ public class MapLoader {
     }
 
     public void dispose () {
+        for (Vector2 vec2: requiredObstacleList) Pools.vector2Pool.free(vec2);
+        for (Vector2 vec2: randomObstacleList) Pools.vector2Pool.free(vec2);
         for (Rectangle rectangle : collisionList) Pools.rectPool.free(rectangle);
         renderer.dispose();
         tiledMap.dispose();
