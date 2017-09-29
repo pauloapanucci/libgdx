@@ -19,10 +19,6 @@ import com.bomberman.game.systems.RenderSystem;
 import com.bomberman.game.util.MapLoader;
 import com.bomberman.game.util.Textures;
 
-import static com.bomberman.game.util.Textures.obstacleTexture;
-import static com.bomberman.game.util.Textures.playerOneRegions;
-import static com.bomberman.game.util.Textures.playerOneTexture;
-
 public class BombermanGame extends ApplicationAdapter implements InputProcessor{
 	SpriteBatch batch;
 
