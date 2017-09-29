@@ -51,6 +51,20 @@ public class BombermanGame extends ApplicationAdapter implements InputProcessor{
 		Textures.obstacleTexture = new Texture("obstacle.png");
 		Textures.obstacleRegion = new TextureRegion(Textures.obstacleTexture, 0,0,16, 16);
 		Textures.obstacleAnimation = new Animation<TextureRegion>(1f, Textures.obstacleRegion);
+
+		Textures.bombTexture = new Texture("bomb.png");
+		for (int i = 0; i < 2; i++) {
+			Textures.bombRegions[i] = new TextureRegion(Textures.bombTexture, i * 16, 0, 16, 16);
+		}
+		Textures.bombAnimation = new Animation<TextureRegion>(0.2f, Textures.bombRegions);
+
+		Textures.bombCenter = new TextureRegion(Textures.bombTexture, 2 * 16, 0 , 16, 16);
+		Textures.bombUp = new TextureRegion(Textures.bombTexture, 3 * 16, 0 , 16, 16);
+		Textures.bombDown = new TextureRegion(Textures.bombTexture, 4 * 16, 0 , 16, 16);
+		Textures.bombLeft = new TextureRegion(Textures.bombTexture, 5 * 16, 0 , 16, 16);
+		Textures.bombRight = new TextureRegion(Textures.bombTexture, 6 * 16, 0 , 16, 16);
+		Textures.bombVertical = new TextureRegion(Textures.bombTexture, 7 * 16, 0 , 16, 16);
+		Textures.bombHorizontal = new TextureRegion(Textures.bombTexture, 8 * 16, 0 , 16, 16);
 	}
 
 	private void initializeWorld(){

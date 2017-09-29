@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Textures {
     public static TextureRegion img;
-    
 
     public static Animation playerOneAnimation;
     public static  Texture playerOneTexture;
@@ -19,4 +18,5 @@ public class Textures {
     public static Texture bombTexture;
     public static  TextureRegion[] bombRegions;
     public static Animation<TextureRegion> bombAnimation;
+    public static TextureRegion bombUp, bombDown, bombLeft, bombRight, bombVertical, bombHorizontal, bombCenter;
 }
