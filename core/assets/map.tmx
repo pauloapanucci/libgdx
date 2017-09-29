@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="left-up" width="17" height="17" tilewidth="16" tileheight="16" nextobjectid="64">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="left-up" width="17" height="17" tilewidth="16" tileheight="16" nextobjectid="69">
  <tileset firstgid="1" name="Map" tilewidth="16" tileheight="16" tilecount="21" columns="7">
   <image source="map.tiles.png" width="112" height="48"/>
  </tileset>
@@ -13,7 +13,7 @@
    eJxjZGBg4KUAMwMxNwNlgBvJDDYyaWQzRt0x6o5Rd9DHHfwMlJUfgkAMABPzBBs=
   </data>
  </layer>
- <objectgroup name="Collision">
+ <objectgroup name="Collision" visible="0">
   <object id="9" x="0" y="0" width="256" height="16"/>
   <object id="10" x="256" y="0" width="16" height="272"/>
   <object id="11" x="0" y="256" width="256" height="16"/>
@@ -67,5 +67,12 @@
   <object id="61" x="64" y="224" width="16" height="16"/>
   <object id="62" x="32" y="224" width="16" height="16"/>
   <object id="63" x="192" y="224" width="16" height="16"/>
+ </objectgroup>
+ <objectgroup name="Obstacles">
+  <object id="64" type="required" x="16" y="48" width="32" height="176"/>
+  <object id="65" type="required" x="48" y="224" width="176" height="32"/>
+  <object id="66" type="required" x="224" y="48" width="32" height="176"/>
+  <object id="67" type="required" x="48" y="16" width="176" height="32"/>
+  <object id="68" type="random" x="48" y="48" width="176" height="176"/>
  </objectgroup>
 </map>
