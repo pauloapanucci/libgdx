@@ -22,10 +22,10 @@ import java.util.List;
 
 public class MapLoader {
     private TiledMap tiledMap;
-    private MapLayer spawnLayer, obstacleLayer, collisionLayer;
+    private MapLayer spawnLayer, obstacleLayer, collisionLayer, obstacleLAyer;
     private TiledMapTileLayer floorLayer, layoutLayer;
 
-    public List<Vector2> spawnList, obstacleList;
+    public List<Vector2> spawnList, requiredObstacleList, randomObstacleList;
     public List<Rectangle> collisionList;
 
     public OrthogonalTiledMapRenderer renderer;
@@ -46,6 +46,35 @@ public class MapLoader {
             int h = properties.get("height", Float.class).intValue();
             obtain.set(x, y, w, h);
             collisionList.add(obtain);
+        }
+
+        obstacleLAyer = tiledMap.getLayers().get("Obstacles");
+        requiredObstacleList = new ArrayList<Vector2>();
+        randomObstacleList = new ArrayList<Vector2>();
+        for (MapObject mapObject : obstacleLAyer.getObjects()) {
+            MapProperties properties = mapObject.getProperties();
+            int x = properties.get("x", Float.class).intValue();
+            int y = properties.get("y", Float.class).intValue();
+            int width = properties.get("width", Float.class).intValue();
+            int height = properties.get("height", Float.class).intValue();
+            String type = properties.get("type", String.class);
+            for (int i = 0; i < width; i++){
+                for (int j = 0; j < height; j++){
+                    final int px =  i + x, py = j + y;
+                    if(collisionList.stream().noneMatch((collider) -> collider.x == px && collider.y == py)){
+                        if ("required".equals(type)) {
+                            Vector2 obtain = Pools.vector2Pool.obtain();
+                            obtain.set(px, py);
+                            requiredObstacleList.add(obtain);
+                        }
+                        else if ("random".equals(type)){
+                            Vector2 obtain = Pools.vector2Pool.obtain();
+                            obtain.set(px, py);
+                            randomObstacleList.add(obtain);
+                        }
+                    }
+                }
+            }
         }
 
     }
