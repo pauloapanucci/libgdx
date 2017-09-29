@@ -32,7 +32,7 @@ public class BombermanGame extends ApplicationAdapter implements InputProcessor{
 	private MapLoader mapLoader;
 
 
-	private void initializeTextures(){
+	private void loadTextures(){
 		shape = new ShapeRenderer();
 		batch = new SpriteBatch();
 		Textures.playerOneTexture = new Texture("player.one.png");
@@ -49,6 +49,7 @@ public class BombermanGame extends ApplicationAdapter implements InputProcessor{
 		Textures.obstacleAnimation = new Animation<TextureRegion>(1f, Textures.obstacleRegion);
 
 		Textures.bombTexture = new Texture("bomb.png");
+		Textures.bombRegions = new TextureRegion[2];
 		for (int i = 0; i < 2; i++) {
 			Textures.bombRegions[i] = new TextureRegion(Textures.bombTexture, i * 16, 0, 16, 16);
 		}
@@ -103,7 +104,7 @@ public class BombermanGame extends ApplicationAdapter implements InputProcessor{
 	public void create () {
 		mapLoader = new MapLoader();
 		mapLoader.loadMap("map.tmx");
-		initializeTextures();
+		loadTextures();
 		initializeWorld();
 	}
 
