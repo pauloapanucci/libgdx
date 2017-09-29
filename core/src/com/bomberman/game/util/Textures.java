@@ -12,4 +12,5 @@ public class Textures {
     public static  Texture obstacleTexture;
     public static Animation obstacleAnimation;
     public static TextureRegion obstacleRegion;
+    public static Animation<TextureRegion> bombAnimation;
 }
