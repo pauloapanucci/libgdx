@@ -35,18 +35,22 @@ public class PlayerEntity extends Entity implements InputProcessor{
     @Override
     public boolean keyDown(int keycode) {
         switch (keycode) {
+            case Input.Keys.W:
             case Input.Keys.UP:
                 input.up = true;
                 break;
 
+            case Input.Keys.S:
             case Input.Keys.DOWN:
                 input.down = true;
                 break;
 
+            case Input.Keys.A:
             case Input.Keys.LEFT:
                 input.left = true;
                 break;
 
+            case Input.Keys.D:
             case Input.Keys.RIGHT:
                 input.right = true;
 
@@ -59,18 +63,23 @@ public class PlayerEntity extends Entity implements InputProcessor{
     @Override
     public boolean keyUp(int keycode) {
         switch (keycode) {
+
+            case Input.Keys.W:
             case Input.Keys.UP:
                 input.up = false;
                 break;
 
+            case Input.Keys.S:
             case Input.Keys.DOWN:
                 input.down = false;
                 break;
 
+            case Input.Keys.A:
             case Input.Keys.LEFT:
                 input.left = false;
                 break;
 
+            case Input.Keys.D:
             case Input.Keys.RIGHT:
                 input.right = false;
 

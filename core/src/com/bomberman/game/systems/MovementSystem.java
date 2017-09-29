@@ -16,7 +16,7 @@ import com.bomberman.game.util.Pools;
 
 public class MovementSystem extends IteratingSystem {
 
-    private static final float DELAY = 0.1f;
+    private static final float DELAY = 0.25f;
     private Family collisionFamily;
     private ImmutableArray<Entity> collisionEntities;
 
