@@ -57,8 +57,8 @@ public class MapLoader {
             int width = properties.get("width", Float.class).intValue();
             int height = properties.get("height", Float.class).intValue();
             String type = properties.get("type", String.class);
-            for (int i = 0; i < width; i+=16){
-                for (int j = 0; j < height; j+=16){
+            for (int i = 0; i < width; i += 16){
+                for (int j = 0; j < height; j += 16){
                     final int px =  i + x, py = j + y;
                     if(collisionList.stream().noneMatch((collider) -> collider.x == px && collider.y == py)){
                         if ("required".equals(type)) {
